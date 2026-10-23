@@ -1,3 +1,4 @@
+"use client";
 const root = document.documentElement;
 const sidebar = document.getElementById("sidebar");
 const scrim = document.getElementById("sidebar-scrim");
