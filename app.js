@@ -484,4 +484,4 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
         addMessage("assistant", assistantMessage.content, assistantMessage.sources, assistantMessage.thinkingDurationMs);
       } catch (error) {
         loadingNotice.remove();
-        if (chatMessages.at(-1)?.role === "user
+        if (chatMessages.at(-1)?.role === "user"
