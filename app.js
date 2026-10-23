@@ -1,5 +1,4 @@
 "use client";
-
 if (typeof window !== "undefined" && typeof document !== "undefined") {
   document.addEventListener("DOMContentLoaded", () => {
     const root = document.documentElement;
@@ -485,3 +484,49 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
       } catch (error) {
         loadingNotice.remove();
         if (chatMessages.at(-1)?.role === "user"
+                    if (chatMessages.at(-1)?.role === "user") chatMessages.pop();
+        saveCurrentChat();
+        if (messageInput) messageInput.value = text;
+        resizeInput();
+        addStatusMessage("LUXA AI yanıt veremedi. Tekrar dene.", "error", () => sendMessage(text));
+        if (messageInput) messageInput.focus();
+      } finally {
+        setPending(false);
+      }
+    }
+
+    if (composer) {
+      composer.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        if (messageInput) await sendMessage(messageInput.value.trim());
+      });
+    }
+
+    if (newChatButton) {
+      newChatButton.addEventListener("click", () => {
+        currentChatId = null;
+        chatMessages = [];
+        if (messages) messages.innerHTML = "";
+        if (welcomeBlock) welcomeBlock.hidden = false;
+        if (messageInput) messageInput.value = "";
+        setPending(false);
+        resizeInput();
+        setSidebar(false);
+        if (messageInput) messageInput.focus();
+      });
+    }
+
+    document.addEventListener("keydown", (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        if (newChatButton) newChatButton.click();
+      }
+      if (event.key === "Escape" && sidebar?.classList.contains("is-open")) setSidebar(false);
+    });
+
+    chatHistory = readChatHistory();
+    renderChatHistory();
+    resizeInput();
+  });
+}
+
